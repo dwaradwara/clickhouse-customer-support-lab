@@ -1,0 +1,3 @@
+topic=saas-events
+partition=1
+offset=221849

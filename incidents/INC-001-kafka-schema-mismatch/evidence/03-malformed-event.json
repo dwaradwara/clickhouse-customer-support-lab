@@ -1,0 +1,1 @@
+{"event_id":"00000000-0000-4000-8000-000000000001","tenant_id":101,"user_id":900001,"event_type":"api_request","service_name":"api","region":"eu-central-1","status_code":200,"duration_ms":"NOT_A_NUMBER","deployment_version":"inc-001","event_timestamp":"2026-09-17T20:05:00.000Z","payload":"inc-001-kafka-schema-mismatch"}

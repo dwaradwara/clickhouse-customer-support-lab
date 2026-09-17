@@ -1,0 +1,1 @@
+{"event_id":"00000000-0000-4000-8000-000000000002","tenant_id":101,"user_id":900002,"event_type":"api_request","service_name":"api","region":"eu-central-1","status_code":200,"duration_ms":125,"deployment_version":"inc-001-recovery","event_timestamp":"2026-09-17T20:25:31.005Z","payload":"inc-001-recovery-marker"}

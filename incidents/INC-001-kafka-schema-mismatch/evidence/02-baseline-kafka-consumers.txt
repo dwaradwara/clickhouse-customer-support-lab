@@ -1,0 +1,3 @@
+host	partitions	current_offsets	num_messages_read	num_commits	is_currently_used	recent_exceptions
+clickhouse1	[0,1]	[258070,221848]	76	1	1	0
+clickhouse2	[2]	[120189]	24	1	1	0

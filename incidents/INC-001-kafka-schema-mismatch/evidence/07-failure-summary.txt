@@ -1,0 +1,3 @@
+host	first_partition	current_offsets	num_messages_read	num_commits	last_commit_time	is_currently_used	recent_exceptions	latest_exception_time	exception_summary
+clickhouse1	0	[]	104	1	2026-09-17 19:11:35	1	10	2026-09-17 20:10:38	Code: 27. DB::Exception: Cannot parse input: expected \'"\' before: \'NOT_A_NUMBER","deployment_version":"inc-001","event_timestamp":"2026-09-17T20:05:00.000Z","payload":"inc-001-kafka-schema-mismatch"}\': (while reading the value of key duration_ms): (at row 1)\n: while parsing Kafka message (topic: saas-events, partition: 1, offset: 221848): While executing Kafka. (CANNOT_PARSE_INPUT_ASSERTION_FAILED)
+clickhouse2	2	[-1001]	24	1	2026-09-17 19:11:35	1	0

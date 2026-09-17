@@ -1,0 +1,3 @@
+
+GROUP                     TOPIC           PARTITION  NEW-OFFSET
+clickhouse-saas-events-v1 saas-events     1          221849

@@ -1,0 +1,20 @@
+
+============================================================
+INC-001 Validation - Kafka Schema Mismatch
+============================================================
+PASS: Malformed Kafka record was not inserted into ClickHouse
+PASS: Exactly one recovery marker is present
+PASS: Kafka Engine and materialized view are attached on both nodes
+PASS: Strict Kafka parsing is restored on both nodes
+
+Kafka consumer group:
+
+GROUP                     TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                                                             HOST            CLIENT-ID
+clickhouse-saas-events-v1 saas-events     0          258070          258070          0               ClickHouse-clickhouse1-saas_analytics-events_kafka-d158352e-6a8e-4579-8408-836f9bec2e3b /172.23.0.4     ClickHouse-clickhouse1-saas_analytics-events_kafka
+clickhouse-saas-events-v1 saas-events     1          221850          221850          0               ClickHouse-clickhouse1-saas_analytics-events_kafka-d158352e-6a8e-4579-8408-836f9bec2e3b /172.23.0.4     ClickHouse-clickhouse1-saas_analytics-events_kafka
+clickhouse-saas-events-v1 saas-events     2          120189          120189          0               ClickHouse-clickhouse2-saas_analytics-events_kafka-7e1ec194-b931-4517-a578-aa28c242040e /172.23.0.3     ClickHouse-clickhouse2-saas_analytics-events_kafka
+
+PASS: Kafka consumer group total lag is zero
+
+============================================================
+INC-001 VALIDATION PASSED

@@ -1,0 +1,5 @@
+
+GROUP                     TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                                                             HOST            CLIENT-ID
+clickhouse-saas-events-v1 saas-events     0          258070          258070          0               ClickHouse-clickhouse1-saas_analytics-events_kafka-a4c5a400-b41a-4966-bc48-81210e089eb2 /172.23.0.4     ClickHouse-clickhouse1-saas_analytics-events_kafka
+clickhouse-saas-events-v1 saas-events     1          221848          221849          1               ClickHouse-clickhouse1-saas_analytics-events_kafka-a4c5a400-b41a-4966-bc48-81210e089eb2 /172.23.0.4     ClickHouse-clickhouse1-saas_analytics-events_kafka
+clickhouse-saas-events-v1 saas-events     2          120189          120189          0               ClickHouse-clickhouse2-saas_analytics-events_kafka-45a86506-89f3-4b10-b5e6-b04009d675c5 /172.23.0.3     ClickHouse-clickhouse2-saas_analytics-events_kafka

@@ -1,0 +1,5 @@
+
+GROUP                     TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID     HOST            CLIENT-ID
+clickhouse-saas-events-v1 saas-events     0          258070          258070          0               -               -               -
+clickhouse-saas-events-v1 saas-events     1          221849          221849          0               -               -               -
+clickhouse-saas-events-v1 saas-events     2          120189          120189          0               -               -               -

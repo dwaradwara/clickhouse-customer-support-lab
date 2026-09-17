@@ -1,0 +1,6 @@
+incident=INC-001-kafka-schema-mismatch
+injected_at_utc=2026-09-17 20:09:16 UTC
+topic=saas-events
+invalid_field=duration_ms
+expected_type=UInt32
+injected_value=NOT_A_NUMBER
