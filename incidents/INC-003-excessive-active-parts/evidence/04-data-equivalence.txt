@@ -1,0 +1,3 @@
+table_name	rows	sum_event_id	sum_value
+batched_inserts	40	820	82
+tiny_inserts	40	820	82

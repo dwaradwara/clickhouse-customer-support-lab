@@ -1,0 +1,3 @@
+table_name	engine	sorting_key	partition_key
+batched_inserts	MergeTree	tenant_id, event_time, event_id
+tiny_inserts	MergeTree	tenant_id, event_time, event_id

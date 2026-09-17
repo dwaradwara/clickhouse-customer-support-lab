@@ -1,0 +1,34 @@
+
+============================================================
+INC-003 Validation - Excessive Active Parts from Tiny Inserts
+============================================================
+
+Resetting fixture and stopping merges...
+Creating 40 synchronous one-row inserts...
+Creating one synchronous 40-row batch...
+
+Failure-state metrics:
+tiny_inserts:    rows=40 active_parts=40
+batched_inserts: rows=40 active_parts=1
+
+PASS: Both tables contain 40 active rows
+PASS: Tiny inserts created 40 active parts
+PASS: Single batched insert created 1 active part
+PASS: Tiny inserts created more active parts than batching (40 > 1)
+
+Data signatures:
+tiny_inserts:    40:820:82
+batched_inserts: 40:820:82
+
+PASS: Both insert patterns produced equivalent logical data
+
+Recovering fragmented table...
+
+Post-recovery metrics:
+tiny_inserts: rows=40 active_parts=1
+
+PASS: Recovery preserved all 40 rows
+PASS: Recovery consolidated tiny_inserts to 1 active part
+
+============================================================
+INC-003 VALIDATION PASSED
