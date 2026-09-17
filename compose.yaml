@@ -1,0 +1,53 @@
+﻿name: clickhouse-customer-support-lab
+
+services:
+  keeper:
+    image: clickhouse/clickhouse-keeper:${KEEPER_VERSION}
+    hostname: keeper
+    volumes:
+      - ./keeper/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml:ro
+      - keeper-data:/var/lib/clickhouse
+    ports:
+      - "9181:9181"
+    restart: unless-stopped
+
+  clickhouse1:
+    image: clickhouse/clickhouse-server:${CLICKHOUSE_VERSION}
+    hostname: clickhouse1
+    env_file:
+      - .env.local
+    depends_on:
+      keeper:
+        condition: service_started
+    volumes:
+      - ./clickhouse/config.d/cluster.xml:/etc/clickhouse-server/config.d/cluster.xml:ro
+      - ./clickhouse/node1/macros.xml:/etc/clickhouse-server/config.d/macros.xml:ro
+      - ./clickhouse/users.d/cluster_internal.xml:/etc/clickhouse-server/users.d/cluster_internal.xml:ro
+      - clickhouse1-data:/var/lib/clickhouse
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    restart: unless-stopped
+
+  clickhouse2:
+    image: clickhouse/clickhouse-server:${CLICKHOUSE_VERSION}
+    hostname: clickhouse2
+    env_file:
+      - .env.local
+    depends_on:
+      keeper:
+        condition: service_started
+    volumes:
+      - ./clickhouse/config.d/cluster.xml:/etc/clickhouse-server/config.d/cluster.xml:ro
+      - ./clickhouse/node2/macros.xml:/etc/clickhouse-server/config.d/macros.xml:ro
+      - ./clickhouse/users.d/cluster_internal.xml:/etc/clickhouse-server/users.d/cluster_internal.xml:ro
+      - clickhouse2-data:/var/lib/clickhouse
+    ports:
+      - "8124:8123"
+      - "9001:9000"
+    restart: unless-stopped
+
+volumes:
+  keeper-data:
+  clickhouse1-data:
+  clickhouse2-data:
