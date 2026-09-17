@@ -1,4 +1,4 @@
-﻿# Python
+# Python
 .venv/
 __pycache__/
 *.py[cod]
@@ -23,3 +23,5 @@ Thumbs.db
 
 # Local benchmark scratch files
 benchmarks/tmp/
+
+support-bundles/
