@@ -1,0 +1,2 @@
+requests	errors	avg_duration_ms	p95_duration_ms
+2232	2232	920	1520

@@ -1,0 +1,3 @@
+design	requests	errors	avg_duration_ms	p95_duration_ms
+bad_order	2232	2232	920	1520
+good_order	2232	2232	920	1520

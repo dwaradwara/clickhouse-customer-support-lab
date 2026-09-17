@@ -1,0 +1,2 @@
+query_id	query_duration_ms	read_rows	read_bytes	memory_usage	selected_parts	selected_marks
+inc002-repro-20260917T205101Z	35	6696000	127.72 MiB	2.68 MiB	2	818

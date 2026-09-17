@@ -1,0 +1,3 @@
+table_name	rows
+events_bad_order	20000000
+events_good_order	20000000

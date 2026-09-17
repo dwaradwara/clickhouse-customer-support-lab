@@ -1,0 +1,33 @@
+Output: count()
+
+Aggregating
+  Keys:
+  Aggregates: count()
+  Skip merging: 0
+ReadFromMergeTree (query_benchmark.events_bad_order)
+      Read type: Default
+      Parts: 2 | Granules: 818
+      Output: Empty
+      Prewhere filter
+      Prewhere filter column:  event_timestamp < \'2026-04-01 00:00:00\' AND event_timestamp >= \'2026-03-01 00:00:00\' AND tenant_id = 101 AND service_name = \'api\' AND event_type = \'api_request\'
+      Indexes:
+        Min-Max
+          Keys:
+            event_timestamp
+          Condition: and((event_timestamp in (-Inf, \'1775001600\')), (event_timestamp in [\'1772323200\', +Inf)))
+          Parts: 2/7
+          Granules: 818/2444
+        Partition
+          Keys:
+            toYYYYMM(event_timestamp)
+          Condition: and((toYYYYMM(event_timestamp) in (-Inf, 202604]), (toYYYYMM(event_timestamp) in [202603, +Inf)))
+          Parts: 2/2
+          Granules: 818/818
+        PrimaryKey
+          Keys:
+            event_timestamp
+          Condition: and((event_timestamp in (-Inf, \'1775001600\')), (event_timestamp in [\'1772323200\', +Inf)))
+          Parts: 2/2
+          Granules: 818/818
+          Search Algorithm: binary search
+        Ranges: 2

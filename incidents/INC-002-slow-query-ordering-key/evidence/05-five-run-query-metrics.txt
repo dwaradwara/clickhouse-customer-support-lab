@@ -1,0 +1,11 @@
+query_id	design	query_duration_ms	read_rows	read_bytes	memory_usage	selected_parts	selected_marks	result_rows
+inc002-20260918004722-bad-1	bad_order	153	6696000	127.72 MiB	2.74 MiB	2	818	1
+inc002-20260918004722-bad-2	bad_order	30	6696000	127.72 MiB	2.68 MiB	2	818	1
+inc002-20260918004722-bad-3	bad_order	48	6696000	127.72 MiB	2.68 MiB	2	818	1
+inc002-20260918004722-bad-4	bad_order	31	6696000	127.72 MiB	2.68 MiB	2	818	1
+inc002-20260918004722-bad-5	bad_order	33	6696000	127.72 MiB	2.68 MiB	2	818	1
+inc002-20260918004722-good-1	good_order	18	40960	656.52 KiB	1.49 MiB	3	5	1
+inc002-20260918004722-good-2	good_order	79	24576	444.75 KiB	958.81 KiB	3	3	1
+inc002-20260918004722-good-3	good_order	5	24576	444.75 KiB	1.48 MiB	3	3	1
+inc002-20260918004722-good-4	good_order	4	24576	444.75 KiB	1.47 MiB	3	3	1
+inc002-20260918004722-good-5	good_order	4	24576	444.75 KiB	2.05 MiB	3	3	1

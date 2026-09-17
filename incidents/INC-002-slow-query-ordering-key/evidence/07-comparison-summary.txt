@@ -1,0 +1,27 @@
+INC-002 measured comparison
+
+Dataset rows per table: 20000000
+Bad ORDER BY:  (event_timestamp, event_id)
+Good ORDER BY: (tenant_id, service_name, event_type, event_timestamp)
+
+EXPLAIN primary-key granules:
+bad_order:  818/818
+good_order: 5/818
+
+Five-run median:
+bad_order duration:  33 ms
+good_order duration: 5 ms
+runtime ratio:       6.6x
+
+Typical rows read:
+bad_order:  6696000
+good_order: 24576
+row-read ratio: approximately 272x
+
+Typical selected marks:
+bad_order:  818
+good_order: 3
+mark ratio: approximately 273x
+
+Note: runtime measurements contained warmup/system-noise outliers.
+Rows read, selected marks, and EXPLAIN pruning provide the stronger causal evidence.

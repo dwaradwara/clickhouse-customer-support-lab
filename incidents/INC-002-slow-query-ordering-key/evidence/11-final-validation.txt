@@ -1,0 +1,21 @@
+
+============================================================
+INC-002 Validation - Slow Query from Poor Ordering Key
+============================================================
+PASS: Both benchmark tables contain 20,000,000 rows
+
+Business result (bad order):  2232	2232	920	1520
+Business result (good order): 2232	2232	920	1520
+
+PASS: Both designs return the same business result
+
+Validation query metrics:
+query_id	read_rows	selected_marks
+inc002-validate-20260917T205843Z-bad	6696000	818
+inc002-validate-20260917T205843Z-good	24576	3
+
+PASS: Good ordering key reads fewer rows (24576 < 6696000)
+PASS: Good ordering key selects fewer marks (3 < 818)
+
+============================================================
+INC-002 VALIDATION PASSED
