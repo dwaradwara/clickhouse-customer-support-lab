@@ -1,0 +1,13 @@
+apiVersion: 1
+
+providers:
+  - name: ClickHouse Support Lab
+    orgId: 1
+    folder: ClickHouse Support Lab
+    type: file
+    disableDeletion: false
+    editable: true
+    updateIntervalSeconds: 10
+
+    options:
+      path: /etc/grafana/provisioning/dashboards/json

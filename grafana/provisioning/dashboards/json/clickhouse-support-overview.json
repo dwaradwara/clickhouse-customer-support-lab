@@ -1,0 +1,420 @@
+{
+    "id":  null,
+    "uid":  "clickhouse-support-overview",
+    "title":  "ClickHouse Support Overview",
+    "tags":  [
+                 "clickhouse",
+                 "support-lab"
+             ],
+    "timezone":  "browser",
+    "schemaVersion":  41,
+    "version":  6,
+    "refresh":  "10s",
+    "time":  {
+                 "from":  "now-1d",
+                 "to":  "now+2d"
+             },
+    "panels":  [
+                   {
+                       "id":  1,
+                       "type":  "stat",
+                       "title":  "Total Events",
+                       "description":  "Total rows currently visible through the saas_analytics.events Distributed table.",
+                       "datasource":  {
+                                          "type":  "grafana-clickhouse-datasource",
+                                          "uid":  "clickhouse"
+                                      },
+                       "gridPos":  {
+                                       "h":  4,
+                                       "w":  6,
+                                       "x":  0,
+                                       "y":  0
+                                   },
+                       "fieldConfig":  {
+                                           "defaults":  {
+                                                            "unit":  "short"
+                                                        },
+                                           "overrides":  [
+
+                                                         ]
+                                       },
+                       "options":  {
+                                       "colorMode":  "value",
+                                       "graphMode":  "area",
+                                       "justifyMode":  "auto",
+                                       "orientation":  "auto",
+                                       "reduceOptions":  {
+                                                             "calcs":  [
+                                                                           "lastNotNull"
+                                                                       ],
+                                                             "fields":  "",
+                                                             "values":  false
+                                                         },
+                                       "textMode":  "auto"
+                                   },
+                       "targets":  [
+                                       {
+                                           "refId":  "A",
+                                           "datasource":  {
+                                                              "type":  "grafana-clickhouse-datasource",
+                                                              "uid":  "clickhouse"
+                                                          },
+                                           "queryType":  "sql",
+                                           "rawSql":  "SELECT count() AS total_events FROM saas_analytics.events"
+                                       }
+                                   ]
+                   },
+                   {
+                       "id":  2,
+                       "type":  "stat",
+                       "title":  "Error Events",
+                       "description":  "Events with HTTP-style status codes greater than or equal to 400.",
+                       "datasource":  {
+                                          "type":  "grafana-clickhouse-datasource",
+                                          "uid":  "clickhouse"
+                                      },
+                       "gridPos":  {
+                                       "h":  4,
+                                       "w":  6,
+                                       "x":  6,
+                                       "y":  0
+                                   },
+                       "fieldConfig":  {
+                                           "defaults":  {
+                                                            "unit":  "short"
+                                                        },
+                                           "overrides":  [
+
+                                                         ]
+                                       },
+                       "options":  {
+                                       "colorMode":  "value",
+                                       "graphMode":  "area",
+                                       "justifyMode":  "auto",
+                                       "orientation":  "auto",
+                                       "reduceOptions":  {
+                                                             "calcs":  [
+                                                                           "lastNotNull"
+                                                                       ],
+                                                             "fields":  "",
+                                                             "values":  false
+                                                         },
+                                       "textMode":  "auto"
+                                   },
+                       "targets":  [
+                                       {
+                                           "refId":  "A",
+                                           "datasource":  {
+                                                              "type":  "grafana-clickhouse-datasource",
+                                                              "uid":  "clickhouse"
+                                                          },
+                                           "queryType":  "sql",
+                                           "rawSql":  "SELECT countIf(status_code \u003e= 400) AS error_events FROM saas_analytics.events"
+                                       }
+                                   ]
+                   },
+                   {
+                       "id":  3,
+                       "type":  "stat",
+                       "title":  "Active Tenants",
+                       "description":  "Unique tenant identifiers currently present in the analytics dataset.",
+                       "datasource":  {
+                                          "type":  "grafana-clickhouse-datasource",
+                                          "uid":  "clickhouse"
+                                      },
+                       "gridPos":  {
+                                       "h":  4,
+                                       "w":  6,
+                                       "x":  12,
+                                       "y":  0
+                                   },
+                       "fieldConfig":  {
+                                           "defaults":  {
+                                                            "unit":  "short"
+                                                        },
+                                           "overrides":  [
+
+                                                         ]
+                                       },
+                       "options":  {
+                                       "colorMode":  "value",
+                                       "graphMode":  "area",
+                                       "justifyMode":  "auto",
+                                       "orientation":  "auto",
+                                       "reduceOptions":  {
+                                                             "calcs":  [
+                                                                           "lastNotNull"
+                                                                       ],
+                                                             "fields":  "",
+                                                             "values":  false
+                                                         },
+                                       "textMode":  "auto"
+                                   },
+                       "targets":  [
+                                       {
+                                           "refId":  "A",
+                                           "datasource":  {
+                                                              "type":  "grafana-clickhouse-datasource",
+                                                              "uid":  "clickhouse"
+                                                          },
+                                           "queryType":  "sql",
+                                           "rawSql":  "SELECT uniqExact(tenant_id) AS active_tenants FROM saas_analytics.events"
+                                       }
+                                   ]
+                   },
+                   {
+                       "id":  4,
+                       "type":  "stat",
+                       "title":  "P95 Duration",
+                       "description":  "95th percentile synthetic event duration across the current dataset.",
+                       "datasource":  {
+                                          "type":  "grafana-clickhouse-datasource",
+                                          "uid":  "clickhouse"
+                                      },
+                       "gridPos":  {
+                                       "h":  4,
+                                       "w":  6,
+                                       "x":  18,
+                                       "y":  0
+                                   },
+                       "fieldConfig":  {
+                                           "defaults":  {
+                                                            "unit":  "ms"
+                                                        },
+                                           "overrides":  [
+
+                                                         ]
+                                       },
+                       "options":  {
+                                       "colorMode":  "value",
+                                       "graphMode":  "area",
+                                       "justifyMode":  "auto",
+                                       "orientation":  "auto",
+                                       "reduceOptions":  {
+                                                             "calcs":  [
+                                                                           "lastNotNull"
+                                                                       ],
+                                                             "fields":  "",
+                                                             "values":  false
+                                                         },
+                                       "textMode":  "auto"
+                                   },
+                       "targets":  [
+                                       {
+                                           "refId":  "A",
+                                           "datasource":  {
+                                                              "type":  "grafana-clickhouse-datasource",
+                                                              "uid":  "clickhouse"
+                                                          },
+                                           "queryType":  "sql",
+                                           "rawSql":  "SELECT quantileExact(0.95)(duration_ms) AS p95_duration_ms FROM saas_analytics.events"
+                                       }
+                                   ]
+                   },
+                   {
+                       "id":  5,
+                       "type":  "timeseries",
+                       "title":  "Event Volume Over Time",
+                       "description":  "Synthetic SaaS events grouped automatically by the Grafana panel interval.",
+                       "datasource":  {
+                                          "type":  "grafana-clickhouse-datasource",
+                                          "uid":  "clickhouse"
+                                      },
+                       "gridPos":  {
+                                       "h":  8,
+                                       "w":  12,
+                                       "x":  0,
+                                       "y":  4
+                                   },
+                       "fieldConfig":  {
+                                           "defaults":  {
+                                                            "unit":  "short"
+                                                        },
+                                           "overrides":  [
+
+                                                         ]
+                                       },
+                       "options":  {
+                                       "legend":  {
+                                                      "displayMode":  "list",
+                                                      "placement":  "bottom"
+                                                  },
+                                       "tooltip":  {
+                                                       "mode":  "single"
+                                                   }
+                                   },
+                       "targets":  [
+                                       {
+                                           "refId":  "A",
+                                           "datasource":  {
+                                                              "type":  "grafana-clickhouse-datasource",
+                                                              "uid":  "clickhouse"
+                                                          },
+                                           "queryType":  "sql",
+                                           "rawSql":  "SELECT $__timeInterval_ms(event_timestamp) AS time, count() AS events FROM saas_analytics.events WHERE $__timeFilter_ms(event_timestamp) GROUP BY time ORDER BY time"
+                                       }
+                                   ]
+                   },
+                   {
+                       "id":  6,
+                       "type":  "timeseries",
+                       "title":  "Error Volume Over Time",
+                       "description":  "Events with status_code \u003e= 400 grouped by the Grafana panel interval.",
+                       "datasource":  {
+                                          "type":  "grafana-clickhouse-datasource",
+                                          "uid":  "clickhouse"
+                                      },
+                       "gridPos":  {
+                                       "h":  8,
+                                       "w":  12,
+                                       "x":  12,
+                                       "y":  4
+                                   },
+                       "fieldConfig":  {
+                                           "defaults":  {
+                                                            "unit":  "short"
+                                                        },
+                                           "overrides":  [
+
+                                                         ]
+                                       },
+                       "options":  {
+                                       "legend":  {
+                                                      "displayMode":  "list",
+                                                      "placement":  "bottom"
+                                                  },
+                                       "tooltip":  {
+                                                       "mode":  "single"
+                                                   }
+                                   },
+                       "targets":  [
+                                       {
+                                           "refId":  "A",
+                                           "datasource":  {
+                                                              "type":  "grafana-clickhouse-datasource",
+                                                              "uid":  "clickhouse"
+                                                          },
+                                           "queryType":  "sql",
+                                           "rawSql":  "SELECT $__timeInterval_ms(event_timestamp) AS time, count() AS errors FROM saas_analytics.events WHERE $__timeFilter_ms(event_timestamp) AND status_code \u003e= 400 GROUP BY time ORDER BY time"
+                                       }
+                                   ]
+                   },
+                   {
+                       "id":  7,
+                       "type":  "table",
+                       "title":  "Replica Health",
+                       "description":  "Cluster-wide replication queue, replication delay, and read-only state for each ClickHouse node.",
+                       "datasource":  {
+                                          "type":  "grafana-clickhouse-datasource",
+                                          "uid":  "clickhouse"
+                                      },
+                       "gridPos":  {
+                                       "h":  7,
+                                       "w":  24,
+                                       "x":  0,
+                                       "y":  12
+                                   },
+                       "fieldConfig":  {
+                                           "defaults":  {
+
+                                                        },
+                                           "overrides":  [
+
+                                                         ]
+                                       },
+                       "options":  {
+                                       "showHeader":  true,
+                                       "cellHeight":  "sm"
+                                   },
+                       "targets":  [
+                                       {
+                                           "refId":  "A",
+                                           "datasource":  {
+                                                              "type":  "grafana-clickhouse-datasource",
+                                                              "uid":  "clickhouse"
+                                                          },
+                                           "queryType":  "sql",
+                                           "rawSql":  "SELECT hostName() AS host, sum(queue_size) AS replication_queue, max(absolute_delay) AS max_delay_seconds, max(is_readonly) AS readonly FROM clusterAllReplicas(\u0027support_cluster\u0027, system.replicas) GROUP BY host ORDER BY host"
+                                       }
+                                   ]
+                   },
+                   {
+                       "id":  8,
+                       "type":  "table",
+                       "title":  "Kafka Consumer Health",
+                       "description":  "ClickHouse Kafka Engine consumer assignments, offsets, read activity, commit activity, and recent exceptions.",
+                       "datasource":  {
+                                          "type":  "grafana-clickhouse-datasource",
+                                          "uid":  "clickhouse"
+                                      },
+                       "gridPos":  {
+                                       "h":  8,
+                                       "w":  24,
+                                       "x":  0,
+                                       "y":  19
+                                   },
+                       "fieldConfig":  {
+                                           "defaults":  {
+
+                                                        },
+                                           "overrides":  [
+
+                                                         ]
+                                       },
+                       "options":  {
+                                       "showHeader":  true,
+                                       "cellHeight":  "sm"
+                                   },
+                       "targets":  [
+                                       {
+                                           "refId":  "A",
+                                           "datasource":  {
+                                                              "type":  "grafana-clickhouse-datasource",
+                                                              "uid":  "clickhouse"
+                                                          },
+                                           "queryType":  "sql",
+                                           "rawSql":  "SELECT hostName() AS host, length(assignments.partition_id) AS assigned_partitions, assignments.partition_id AS partitions, assignments.current_offset AS current_offsets, num_messages_read, num_commits, last_poll_time, last_commit_time, is_currently_used, length(exceptions.text) AS recent_exceptions FROM clusterAllReplicas(\u0027support_cluster\u0027, system.kafka_consumers) WHERE database = \u0027saas_analytics\u0027 AND table = \u0027events_kafka\u0027 ORDER BY host"
+                                       }
+                                   ]
+                   },
+                   {
+                       "id":  9,
+                       "type":  "table",
+                       "title":  "Recent Expensive Queries",
+                       "description":  "Recent completed ClickHouse queries ranked by execution duration, excluding Grafana monitoring queries.",
+                       "datasource":  {
+                                          "type":  "grafana-clickhouse-datasource",
+                                          "uid":  "clickhouse"
+                                      },
+                       "gridPos":  {
+                                       "h":  9,
+                                       "w":  24,
+                                       "x":  0,
+                                       "y":  27
+                                   },
+                       "fieldConfig":  {
+                                           "defaults":  {
+
+                                                        },
+                                           "overrides":  [
+
+                                                         ]
+                                       },
+                       "options":  {
+                                       "showHeader":  true,
+                                       "cellHeight":  "sm"
+                                   },
+                       "targets":  [
+                                       {
+                                           "refId":  "A",
+                                           "datasource":  {
+                                                              "type":  "grafana-clickhouse-datasource",
+                                                              "uid":  "clickhouse"
+                                                          },
+                                           "queryType":  "sql",
+                                           "rawSql":  "SELECT hostName() AS host, query_id, query_duration_ms, read_rows, formatReadableSize(read_bytes) AS read_bytes, formatReadableSize(memory_usage) AS memory, left(replaceRegexpAll(query, \u0027\\s+\u0027, \u0027 \u0027), 160) AS query FROM clusterAllReplicas(\u0027support_cluster\u0027, system.query_log) WHERE type = \u0027QueryFinish\u0027 AND event_time \u003e= now() - INTERVAL 2 HOUR AND user != \u0027grafana_reader\u0027 ORDER BY query_duration_ms DESC LIMIT 10"
+                                       }
+                                   ]
+                   }
+               ]
+}

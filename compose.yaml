@@ -23,6 +23,7 @@ services:
       - ./clickhouse/config.d/cluster.xml:/etc/clickhouse-server/config.d/cluster.xml:ro
       - ./clickhouse/node1/macros.xml:/etc/clickhouse-server/config.d/macros.xml:ro
       - ./clickhouse/users.d/cluster_internal.xml:/etc/clickhouse-server/users.d/cluster_internal.xml:ro
+      - ./clickhouse/users.d/grafana_reader.xml:/etc/clickhouse-server/users.d/grafana_reader.xml:ro
       - clickhouse1-data:/var/lib/clickhouse
     ports:
       - "8123:8123"
@@ -41,6 +42,7 @@ services:
       - ./clickhouse/config.d/cluster.xml:/etc/clickhouse-server/config.d/cluster.xml:ro
       - ./clickhouse/node2/macros.xml:/etc/clickhouse-server/config.d/macros.xml:ro
       - ./clickhouse/users.d/cluster_internal.xml:/etc/clickhouse-server/users.d/cluster_internal.xml:ro
+      - ./clickhouse/users.d/grafana_reader.xml:/etc/clickhouse-server/users.d/grafana_reader.xml:ro
       - clickhouse2-data:/var/lib/clickhouse
     ports:
       - "8124:8123"
@@ -82,8 +84,33 @@ services:
 
     restart: unless-stopped
 
+  grafana:
+    image: grafana/grafana:${GRAFANA_VERSION}
+    hostname: grafana
+
+    env_file:
+      - .env.local
+
+    depends_on:
+      clickhouse1:
+        condition: service_started
+
+    environment:
+      GF_PLUGINS_PREINSTALL_SYNC: grafana-clickhouse-datasource@${GRAFANA_CLICKHOUSE_PLUGIN_VERSION}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana-data:/var/lib/grafana
+
+    ports:
+      - "3000:3000"
+
+    restart: unless-stopped
+
 volumes:
   keeper-data:
   clickhouse1-data:
   clickhouse2-data:
   kafka-data:
+  grafana-data:
