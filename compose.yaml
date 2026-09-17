@@ -1,4 +1,4 @@
-﻿name: clickhouse-customer-support-lab
+name: clickhouse-customer-support-lab
 
 services:
   keeper:
@@ -47,7 +47,43 @@ services:
       - "9001:9000"
     restart: unless-stopped
 
+  kafka:
+    image: apache/kafka:${KAFKA_VERSION}
+    hostname: kafka
+
+    environment:
+      CLUSTER_ID: ${KAFKA_CLUSTER_ID}
+
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+
+      KAFKA_LISTENERS: HOST://0.0.0.0:9092,INTERNAL://0.0.0.0:19092,CONTROLLER://0.0.0.0:29093
+      KAFKA_ADVERTISED_LISTENERS: HOST://localhost:9092,INTERNAL://kafka:19092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: HOST:PLAINTEXT,INTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:29093
+
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+
+    ports:
+      - "9092:9092"
+
+    restart: unless-stopped
+
 volumes:
   keeper-data:
   clickhouse1-data:
   clickhouse2-data:
+  kafka-data:
