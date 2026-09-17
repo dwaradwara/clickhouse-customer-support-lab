@@ -1,0 +1,7 @@
+=== clickhouse1 ===
+host	total_rows	marker_rows
+clickhouse1	600117	1
+
+=== clickhouse2 ===
+host	total_rows	marker_rows
+clickhouse2	600117	1

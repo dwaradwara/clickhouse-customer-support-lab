@@ -1,0 +1,7 @@
+=== clickhouse1 replication state while clickhouse2 is offline ===
+host	replica_name	is_readonly	is_session_expired	queue_size	inserts_in_queue	merges_in_queue	absolute_delay	total_replicas	active_replicas	log_max_index	log_pointer
+clickhouse1	clickhouse1	0	0	0	0	0	0	2	1	16	17
+
+=== clickhouse2 container state ===
+NAME                                            IMAGE                                   COMMAND            SERVICE       CREATED       STATUS                     PORTS
+clickhouse-customer-support-lab-clickhouse2-1   clickhouse/clickhouse-server:26.8.2.7   "/entrypoint.sh"   clickhouse2   3 hours ago   Exited (0) 9 seconds ago

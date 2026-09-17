@@ -1,0 +1,7 @@
+=== clickhouse1 ===
+host	replica_name	is_readonly	is_session_expired	queue_size	inserts_in_queue	merges_in_queue	absolute_delay	total_replicas	active_replicas	log_max_index	log_pointer
+clickhouse1	clickhouse1	0	0	0	0	0	0	2	2	17	18
+
+=== clickhouse2 ===
+host	replica_name	is_readonly	is_session_expired	queue_size	inserts_in_queue	merges_in_queue	absolute_delay	total_replicas	active_replicas	log_max_index	log_pointer
+clickhouse2	clickhouse2	0	0	0	0	0	0	2	2	17	18

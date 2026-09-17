@@ -1,0 +1,23 @@
+=== clickhouse1 ===
+Row 1:
+
+host:               clickhouse1
+replica_name:       clickhouse1
+is_readonly:        0
+is_session_expired: 0
+queue_size:         0
+absolute_delay:     0
+total_replicas:     2
+active_replicas:    2
+
+=== clickhouse2 ===
+Row 1:
+
+host:               clickhouse2
+replica_name:       clickhouse2
+is_readonly:        0
+is_session_expired: 0
+queue_size:         0
+absolute_delay:     0
+total_replicas:     2
+active_replicas:    2

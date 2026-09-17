@@ -1,0 +1,12 @@
+name	type	default_type	default_expression	comment	codec_expression	ttl_expression
+event_id	UUID
+tenant_id	UInt32
+user_id	UInt64
+event_type	LowCardinality(String)
+service_name	LowCardinality(String)
+region	LowCardinality(String)
+status_code	UInt16
+duration_ms	UInt32
+deployment_version	LowCardinality(String)
+event_timestamp	DateTime64(3, \'UTC\')
+payload	String

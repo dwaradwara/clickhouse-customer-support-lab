@@ -1,0 +1,7 @@
+=== clickhouse1 ===
+database	table_name	engine	sorting_key
+saas_analytics	events_local	ReplicatedMergeTree	tenant_id, service_name, event_type, event_timestamp
+
+=== clickhouse2 ===
+database	table_name	engine	sorting_key
+saas_analytics	events_local	ReplicatedMergeTree	tenant_id, service_name, event_type, event_timestamp

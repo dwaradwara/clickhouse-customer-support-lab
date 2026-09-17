@@ -1,0 +1,7 @@
+=== clickhouse1 ===
+host	rows
+clickhouse1	600116
+
+=== clickhouse2 ===
+host	rows
+clickhouse2	600116

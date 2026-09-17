@@ -1,0 +1,39 @@
+
+============================================================
+INC-004 Validation - Replica Failure and Recovery
+============================================================
+
+Validation marker: 570ce9df-4cad-4b12-a873-c499701614e1
+
+Ensuring clickhouse2 is running...
+PASS: Healthy baseline has two active replicas and empty queues
+PASS: Validation marker is unique before injection
+
+Stopping clickhouse2...
+PASS: Surviving replica detected active_replicas=1
+
+Writing marker while clickhouse2 is offline...
+Detached INSERT submitted. Waiting for local visibility...
+Marker visibility check 1: count=1
+PASS: Marker committed on surviving replica during outage
+
+Restarting clickhouse2...
+
+Recovery timeline:
+2026-09-17T22:45:53Z marker_count=unavailable queue_size=unavailable active_replicas=unavailable
+2026-09-17T22:45:54Z marker_count=1 queue_size=0 active_replicas=2
+PASS: Recovered replica received the outage marker
+PASS: Replication queues returned to zero
+PASS: Both nodes report two active replicas
+PASS: Both replicas are writable
+PASS: Keeper sessions are healthy on both replicas
+
+Final consistency:
+clickhouse1: rows=600120 marker_rows=1
+clickhouse2: rows=600120 marker_rows=1
+
+PASS: Exactly one validation marker exists on each replica
+PASS: Replica row counts are equal
+
+============================================================
+INC-004 VALIDATION PASSED

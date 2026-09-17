@@ -1,0 +1,7 @@
+2026-09-17T22:19:10.041Z	marker_count=unavailable	queue_size=unavailable	active_replicas=unavailable
+2026-09-17T22:19:11.677Z	marker_count=unavailable	queue_size=unavailable	active_replicas=unavailable
+2026-09-17T22:19:13.259Z	marker_count=unavailable	queue_size=unavailable	active_replicas=unavailable
+2026-09-17T22:19:14.770Z	marker_count=unavailable	queue_size=unavailable	active_replicas=unavailable
+2026-09-17T22:19:16.280Z	marker_count=unavailable	queue_size=unavailable	active_replicas=unavailable
+2026-09-17T22:19:17.832Z	marker_count=unavailable	queue_size=unavailable	active_replicas=unavailable
+2026-09-17T22:19:19.463Z	marker_count=1	queue_size=0	active_replicas=2

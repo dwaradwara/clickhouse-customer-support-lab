@@ -1,0 +1,2 @@
+NAME                                            IMAGE                                   COMMAND            SERVICE       CREATED       STATUS                     PORTS
+clickhouse-customer-support-lab-clickhouse2-1   clickhouse/clickhouse-server:26.8.2.7   "/entrypoint.sh"   clickhouse2   3 hours ago   Exited (0) 4 minutes ago

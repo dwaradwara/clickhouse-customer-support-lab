@@ -1,0 +1,2 @@
+host	event_id	tenant_id	deployment_version	event_timestamp	payload
+clickhouse1	1470e519-2a2e-4c20-8ad1-7bb092ef8142	900004	inc-004-outage	2026-09-17 22:17:08.668	inc-004-replica-recovery-marker-1470e519-2a2e-4c20-8ad1-7bb092ef8142
