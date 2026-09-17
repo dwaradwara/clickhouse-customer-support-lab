@@ -1,0 +1,27 @@
+=== INC-006 BEFORE / AFTER COMPARISON ===
+
+=== BEFORE REPAIR ===
+Configured TTL: 365 days
+Intended TTL: 7 days
+Total rows: 1200000
+Rows older than intended 7-day retention: 1000000
+Rows within intended retention: 200000
+Total active storage: 49.82 MiB
+Old-data partition storage: 41.25 MiB
+
+=== AFTER REPAIR ===
+Configured TTL: 7 days
+Expired rows removed: 1000000
+Approximate active storage reduction: 41.25 MiB
+
+total_rows	rows_older_than_7d	rows_within_7d
+200000	0	200000
+active_rows	total_bytes_on_disk	active_parts
+200000	8.57 MiB	3
+mutation_id	command	is_done	parts_to_do
+mutation_4.txt	(MATERIALIZE TTL)	1	0
+
+=== RESULT ===
+The 1,000,000 rows outside the intended 7-day retention window were removed.
+The 200,000 recent rows remained available.
+TTL materialization completed with no remaining parts_to_do.

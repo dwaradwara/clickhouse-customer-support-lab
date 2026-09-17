@@ -1,0 +1,56 @@
+============================================================
+INC-006 Validation - Broken TTL / Disk Growth
+============================================================
+Intended retention: 7 days
+Injected broken TTL: 365 days
+
+Stage 1 - Creating isolated broken-TTL fixture
+PASS: ttl_lab fixture created with 365-day TTL.
+
+Stage 2 - Loading controlled cohorts
+PASS: 1,000,000 old rows and 200,000 recent rows loaded.
+
+Stage 3 - Verifying retention-policy mismatch
+Table definition before repair:
+CREATE TABLE ttl_lab.events (`event_id` UInt64, `tenant_id` UInt32, `event_time` DateTime('UTC'), `payload` String) ENGINE = MergeTree PARTITION BY toYYYYMM(event_time) ORDER BY (tenant_id, event_time, event_id) TTL event_time + toIntervalDay(365) SETTINGS index_granularity = 8192
+Total rows before repair: 1200000
+Rows older than intended 7-day retention: 1000000
+Rows within intended retention: 200000
+Rows expired by configured 365-day TTL: 0
+PASS: 1,000,000 rows are wrongly retained by the 365-day TTL.
+Active storage before repair: 52242518 bytes (49.82 MiB)
+
+Stage 4 - Checking TTL modification behavior
+materialize_ttl_after_modify=1
+PASS: existing data will be materialized after TTL modification.
+
+Stage 5 - Repairing TTL from 365 days to 7 days
+Table definition after repair:
+CREATE TABLE ttl_lab.events (`event_id` UInt64, `tenant_id` UInt32, `event_time` DateTime('UTC'), `payload` String) ENGINE = MergeTree PARTITION BY toYYYYMM(event_time) ORDER BY (tenant_id, event_time, event_id) TTL event_time + toIntervalDay(7) SETTINGS index_granularity = 8192
+PASS: table metadata now contains the 7-day TTL.
+
+Stage 6 - Waiting for TTL materialization
+Cleanup check 1: expired_rows=0 total_rows=200000 recent_rows=200000
+PASS: expired rows removed and recent rows preserved.
+
+Stage 7 - Verifying TTL mutation
+Latest mutation: (MATERIALIZE TTL)	1	0
+PASS: MATERIALIZE TTL mutation completed.
+
+Stage 8 - Verifying active storage reduction
+Active storage before repair: 52242518 bytes (49.82 MiB)
+Active storage after repair:  8988915 bytes (8.57 MiB)
+Storage reduction: 43253603 bytes
+PASS: active storage decreased after expired data was removed.
+
+Final retention state:
+total_rows	rows_older_than_7d	rows_within_7d
+200000	0	200000
+partition	rows	bytes_on_disk
+202608	0	1.69 KiB
+202609	200000	8.57 MiB
+
+============================================================
+INC-006 VALIDATION PASSED
+============================================================
+Broken retention was reproduced, repaired, materialized, and validated.

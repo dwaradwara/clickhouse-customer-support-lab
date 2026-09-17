@@ -1,0 +1,19 @@
+=== INC-006 TTL POLICY DIAGNOSIS ===
+
+Intended retention: 7 days
+Configured retention: 365 days
+
+=== CURRENT TABLE TTL ===
+CREATE TABLE ttl_lab.events (`event_id` UInt64, `tenant_id` UInt32, `event_time` DateTime('UTC'), `payload` String) ENGINE = MergeTree PARTITION BY toYYYYMM(event_time) ORDER BY (tenant_id, event_time, event_id) TTL event_time + toIntervalDay(365) SETTINGS index_granularity = 8192
+
+=== POLICY MISMATCH ===
+observed_at	total_rows	expired_by_intended_7d_policy	expired_by_configured_365d_ttl	retained_due_to_ttl_mismatch
+2026-09-17 23:18:24	1200000	1000000	0	1000000
+
+=== CURRENT STORAGE ===
+active_rows	total_bytes_on_disk	active_parts
+1200000	49.82 MiB	3
+
+=== TTL MODIFY BEHAVIOR SETTING ===
+name	value	changed
+materialize_ttl_after_modify	1	0

@@ -1,0 +1,32 @@
+=== INCIDENT ===
+INC-006 Broken TTL / Disk Growth
+
+=== INTENDED RETENTION ===
+7 days
+
+=== CURRENT TABLE DEFINITION ===
+CREATE TABLE ttl_lab.events
+(
+    `event_id` UInt64,
+    `tenant_id` UInt32,
+    `event_time` DateTime('UTC'),
+    `payload` String
+)
+ENGINE = MergeTree
+PARTITION BY toYYYYMM(event_time)
+ORDER BY (tenant_id, event_time, event_id)
+TTL event_time + toIntervalDay(365)
+SETTINGS index_granularity = 8192
+
+=== RETENTION STATE ===
+total_rows	rows_older_than_7d	rows_within_7d	oldest_event	newest_event
+1200000	1000000	200000	2026-08-18 23:17:01	2026-09-16 23:17:01
+
+=== ACTIVE PARTITIONS ===
+partition	rows	bytes_on_disk	min_time	max_time
+202608	1000000	41.25 MiB	2026-08-18 23:17:01	2026-08-19 23:17:00
+202609	200000	8.57 MiB	2026-09-15 23:17:02	2026-09-16 23:17:01
+
+=== TOTAL ACTIVE STORAGE ===
+active_rows	total_bytes_on_disk	active_parts
+1200000	49.82 MiB	3

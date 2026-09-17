@@ -1,0 +1,40 @@
+=== INC-006 TTL REPAIR ===
+
+Previous TTL: 365 days
+Correct TTL: 7 days
+
+=== ALTER RESULT ===
+ALTER TABLE completed successfully.
+
+=== TABLE DEFINITION AFTER ALTER ===
+CREATE TABLE ttl_lab.events
+(
+    `event_id` UInt64,
+    `tenant_id` UInt32,
+    `event_time` DateTime('UTC'),
+    `payload` String
+)
+ENGINE = MergeTree
+PARTITION BY toYYYYMM(event_time)
+ORDER BY (tenant_id, event_time, event_id)
+TTL event_time + toIntervalDay(7)
+SETTINGS index_granularity = 8192
+
+=== CLEANUP POLL RESULT ===
+expired_rows=0
+total_rows=200000
+
+=== MUTATION STATUS ===
+mutation_id	command	is_done	parts_to_do	latest_fail_reason
+mutation_4.txt	(MATERIALIZE TTL)	1	0
+
+=== FINAL RETENTION STATE ===
+total_rows	rows_older_than_7d	rows_within_7d	oldest_event	newest_event
+200000	0	200000	2026-09-15 23:17:02	2026-09-16 23:17:01
+
+=== FINAL STORAGE ===
+partition	rows	bytes_on_disk
+202608	0	1.69 KiB
+202609	200000	8.57 MiB
+active_rows	total_bytes_on_disk	active_parts
+200000	8.57 MiB	3
