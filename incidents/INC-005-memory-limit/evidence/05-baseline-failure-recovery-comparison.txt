@@ -1,0 +1,4 @@
+stage	query_id	type	query_duration_ms	read_rows	read_bytes	memory_usage	result_rows	exception_code
+baseline	inc-005-baseline-20260918025704	QueryFinish	424	20000000	305.18 MiB	638.75 MiB	1	0
+failure	inc-005-failure-20260918025735	ExceptionWhileProcessing	40	3771583	57.55 MiB	125.06 MiB	0	241
+recovery	inc-005-recovery-20260918025849	QueryFinish	425	20000000	305.18 MiB	643.80 MiB	1	0

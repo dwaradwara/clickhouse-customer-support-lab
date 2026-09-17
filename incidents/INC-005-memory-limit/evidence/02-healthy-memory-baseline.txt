@@ -1,0 +1,20 @@
+=== QUERY ID ===
+inc-005-baseline-20260918025704
+
+=== BASELINE QUERY SETTINGS ===
+max_memory_usage=4000000000
+max_threads=4
+
+=== QUERY RESULT ===
+20000000
+
+=== QUERY LOG METRICS ===
+Row 1:
+
+query_id:          inc-005-baseline-20260918025704
+type:              QueryFinish
+query_duration_ms: 424
+read_rows:         20000000 -- 20.00 million
+read_bytes:        305.18 MiB
+memory_usage:      638.75 MiB
+result_rows:       1

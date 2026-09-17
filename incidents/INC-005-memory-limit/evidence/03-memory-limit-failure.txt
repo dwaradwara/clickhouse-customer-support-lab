@@ -1,0 +1,38 @@
+=== QUERY ID ===
+inc-005-failure-20260918025735
+
+=== FAILURE SETTINGS ===
+max_memory_usage=134217728
+max_memory_usage_readable=128 MiB
+max_threads=4
+
+=== CLIENT OUTPUT ===
+Received exception from server (version 26.8.2):
+Code: 241. DB::Exception: Received from localhost:9000. DB::Exception: Query memory limit exceeded: would
+use 132.12 MiB (attempt to allocate chunk of 7.07 MiB), maximum: 128.00 MiB: While executing
+AggregatingTransform. (MEMORY_LIMIT_EXCEEDED)
+(query: SELECT count() AS grouped_event_ids
+FROM
+(
+    SELECT event_id
+    FROM query_benchmark.events_good_order
+    GROUP BY event_id
+)
+SETTINGS
+    max_memory_usage = 134217728,
+    max_threads = 4)
+
+=== CLIENT EXIT CODE ===
+241
+
+=== QUERY LOG FAILURE RECORD ===
+Row 1:
+
+query_id:          inc-005-failure-20260918025735
+type:              ExceptionWhileProcessing
+query_duration_ms: 40
+read_rows:         3771583 -- 3.77 million
+read_bytes:        57.55 MiB
+memory_usage:      125.06 MiB
+exception_code:    241
+exception:         Code: 241. DB::Exception: Query memory limit exceeded: would use 132.12 MiB (attempt to allocate chunk of 7.07 MiB), maximum: 128.00 MiB: While executing AggregatingTransform. (MEMORY_LIMIT_EXCEEDED) (version 26.8.2.7 (official build))

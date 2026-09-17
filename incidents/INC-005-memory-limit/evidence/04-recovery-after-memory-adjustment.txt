@@ -1,0 +1,22 @@
+=== QUERY ID ===
+inc-005-recovery-20260918025849
+
+=== RECOVERY SETTINGS ===
+max_memory_usage=1073741824
+max_memory_usage_readable=1 GiB
+max_threads=4
+
+=== QUERY RESULT ===
+20000000
+
+=== QUERY LOG METRICS ===
+Row 1:
+
+query_id:          inc-005-recovery-20260918025849
+type:              QueryFinish
+query_duration_ms: 425
+read_rows:         20000000 -- 20.00 million
+read_bytes:        305.18 MiB
+memory_usage:      643.80 MiB
+result_rows:       1
+exception_code:    0

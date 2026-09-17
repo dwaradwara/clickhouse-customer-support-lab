@@ -1,0 +1,15 @@
+Row 1:
+
+database:     query_benchmark
+table:        events_good_order
+rows:         20000000 -- 20.00 million
+active_parts: 17
+disk_size:    338.48 MiB
+Row 1:
+
+total_rows:                20000000 -- 20.00 million
+approx_unique_event_ids:   19933249 -- 19.93 million
+approx_unique_users:       1001147 -- 1.00 million
+approx_unique_tenants:     1000
+approx_unique_services:    4
+approx_unique_event_types: 6

@@ -1,0 +1,62 @@
+============================================================
+INC-005 Validation - Memory Limit Query Failure
+============================================================
+Dataset: query_benchmark.events_good_order
+Expected rows: 20000000
+Baseline limit: 4000000000 bytes
+Failure limit: 134217728 bytes (128 MiB)
+Recovery limit: 1073741824 bytes (1 GiB)
+Max threads: 4
+
+Checking benchmark dataset...
+Dataset rows: 20000000
+PASS: 20M-row benchmark dataset is available.
+
+Stage 1 - Healthy baseline
+Query ID: inc-005-validate-baseline-20260917T230302Z-26523
+Baseline result: 20000000
+PASS: baseline query completed successfully.
+
+Stage 2 - Intentional 128 MiB memory-limit failure
+Query ID: inc-005-validate-failure-20260917T230302Z-26523
+Received exception from server (version 26.8.2):
+Code: 241. DB::Exception: Received from localhost:9000. DB::Exception: Query memory limit exceeded: would use 131.04 MiB (attempt to allocate chunk of 7.07 MiB), maximum: 128.00 MiB: While executing AggregatingTransform. (MEMORY_LIMIT_EXCEEDED)
+(query: SELECT count()
+FROM
+(
+    SELECT event_id
+    FROM query_benchmark.events_good_order
+    GROUP BY event_id
+)
+SETTINGS
+    max_memory_usage = 134217728,
+    max_threads = 4;)
+Failure exit code: 241
+PASS: Code 241 MEMORY_LIMIT_EXCEEDED reproduced.
+
+Stage 3 - Recovery with 1 GiB per-query limit
+Query ID: inc-005-validate-recovery-20260917T230302Z-26523
+Recovery result: 20000000
+PASS: query succeeded after increasing the memory ceiling.
+
+Flushing ClickHouse logs...
+Verifying baseline query log...
+Baseline log: QueryFinish:0:20000000:669803262
+PASS: baseline QueryFinish record verified.
+Verifying failure query log...
+Failure log: ExceptionWhileProcessing:241:3964928:133668223
+PASS: failure query log recorded exception code 241.
+Verifying recovery query log...
+Recovery log: QueryFinish:0:20000000:673861167
+PASS: recovery QueryFinish record verified.
+
+Final validation comparison:
+stage	type	query_duration_ms	read_rows	read_bytes	memory_usage	result_rows	exception_code
+baseline	QueryFinish	352	20000000	305.18 MiB	638.77 MiB	1	0
+failure	ExceptionWhileProcessing	44	3964928	60.50 MiB	127.48 MiB	0	241
+recovery	QueryFinish	396	20000000	305.18 MiB	642.64 MiB	1	0
+
+============================================================
+INC-005 VALIDATION PASSED
+============================================================
+Baseline succeeded, Code 241 was reproduced, and recovery succeeded.
