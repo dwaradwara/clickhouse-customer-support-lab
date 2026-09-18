@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    name: ClickHouse Lab Smoke Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show tool versions
+        run: |
+          docker --version
+          docker compose version
+          make --version
+
+      - name: Create CI environment
+        run: |
+          printf "%s\n" \
+            "CLICKHOUSE_CLUSTER_PASSWORD=ci-cluster-password" \
+            "CLICKHOUSE_GRAFANA_PASSWORD=ci-grafana-password" \
+            > .env.local
+
+      - name: Validate Docker Compose configuration
+        run: docker compose --env-file versions.env config >/dev/null
+
+      - name: Check incident scripts
+        run: make incident-syntax
+
+      - name: Bootstrap lab
+        run: make bootstrap
+
+      - name: Run end-to-end smoke tests
+        run: make smoke
+
+      - name: Show service status
+        if: always()
+        run: docker compose --env-file versions.env ps
+
+      - name: Show service logs on failure
+        if: failure()
+        run: docker compose --env-file versions.env logs --no-color --tail=200
+
+      - name: Tear down lab
+        if: always()
+        run: docker compose --env-file versions.env down -v --remove-orphans
