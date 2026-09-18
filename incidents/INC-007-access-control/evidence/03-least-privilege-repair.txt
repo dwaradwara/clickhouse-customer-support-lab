@@ -1,0 +1,26 @@
+INC-007 - Least-Privilege Repair
+
+Applied repair:
+GRANT SELECT ON access_control_lab.customer_events TO support_reader;
+
+Grant verification:
+SHOW GRANTS FOR support_reader;
+
+Observed grant:
+GRANT SELECT ON access_control_lab.customer_events TO support_reader
+
+Customer query after repair:
+SELECT event_id, tenant_id, event_type
+FROM access_control_lab.customer_events
+ORDER BY event_id;
+
+Observed result:
+1    101    login
+2    101    purchase
+3    202    logout
+
+Validation:
+- support_app could now read the required table
+- only SELECT was granted
+- no INSERT privilege was granted
+- the repair was limited to the specific table required by the customer query

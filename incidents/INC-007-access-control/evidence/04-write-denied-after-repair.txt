@@ -1,0 +1,27 @@
+INC-007 - Write Access Denied After SELECT Repair
+
+Purpose:
+Verify that the repair did not over-grant the support_app account.
+
+Attempted query:
+INSERT INTO access_control_lab.customer_events SELECT toUInt64(4), toUInt32(303), 'test', now('UTC');
+
+Observed result:
+Code: 497
+ACCESS_DENIED
+
+ClickHouse reported that support_app did not have the required privilege:
+INSERT(event_id, tenant_id, event_type, created_at) ON access_control_lab.customer_events
+
+Post-failure row-count check:
+SELECT count() AS row_count FROM access_control_lab.customer_events;
+
+Observed row count:
+3
+
+Validation:
+- SELECT access remained functional
+- INSERT remained denied
+- the denied INSERT did not modify the table
+- the final privilege scope remained read-only
+- the repair followed least-privilege access control

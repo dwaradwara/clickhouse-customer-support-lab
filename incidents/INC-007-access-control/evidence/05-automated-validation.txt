@@ -1,0 +1,59 @@
+============================================================
+INC-007 Validation - Roles / Grants Permission Denial
+============================================================
+
+Stage 1 - Resetting isolated access-control fixture
+PASS: fixture created with 3 rows.
+
+Stage 2 - Verifying role assignment
+PASS: support_reader is assigned and active as a default role.
+
+Stage 3 - Verifying missing SELECT privilege
+PASS: support_reader has no SELECT grant on the target table.
+
+Stage 4 - Reproducing customer SELECT failure
+Received exception from server (version 26.8.2):
+Code: 497. DB::Exception: Received from localhost:9000. DB::Exception: support_app: Not enough privileges. To execute this query, it's necessary to have the grant SELECT ON access_control_lab.customer_events. (ACCESS_DENIED)
+(query: SELECT event_id, tenant_id, event_type FROM access_control_lab.customer_events ORDER BY event_id;)
+PASS: Code 497 SELECT permission failure reproduced.
+
+Stage 5 - Capturing authorization diagnosis
+Role assignment:
+user_name	granted_role_name	granted_role_is_default
+support_app	support_reader	1
+
+Role grants before repair:
+role_name	access_type	database	table	grant_option
+
+PASS: role exists and is assigned, but required table SELECT is missing.
+
+Stage 6 - Applying least-privilege repair
+Current support_reader grant:
+GRANT SELECT ON access_control_lab.customer_events TO support_reader
+PASS: table-level SELECT granted to support_reader.
+
+Stage 7 - Verifying customer SELECT recovery
+1	101	login
+2	101	purchase
+3	202	logout
+PASS: original customer SELECT now succeeds.
+
+Stage 8 - Proving INSERT remains denied
+Received exception from server (version 26.8.2):
+Code: 497. DB::Exception: Received from localhost:9000. DB::Exception: support_app: Not enough privileges. To execute this query, it's necessary to have the grant INSERT(event_id, tenant_id, event_type, created_at) ON access_control_lab.customer_events. (ACCESS_DENIED)
+(query: INSERT INTO access_control_lab.customer_events SELECT toUInt64(4), toUInt32(303), 'test', now('UTC');)
+PASS: INSERT remains denied.
+
+Stage 9 - Verifying denied write caused no data change
+Final row count: 3
+PASS: denied INSERT did not modify the table.
+
+Stage 10 - Final privilege boundary
+role_name	access_type	database	table	grant_option
+support_reader	SELECT	access_control_lab	customer_events	0
+PASS: final role remains SELECT-only for the target table.
+
+============================================================
+INC-007 VALIDATION PASSED
+============================================================
+Permission failure reproduced, diagnosed, repaired with least privilege, and validated.

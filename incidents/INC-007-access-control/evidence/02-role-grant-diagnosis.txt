@@ -1,0 +1,28 @@
+INC-007 - Role and Grant Diagnosis
+
+User: support_app
+Assigned role: support_reader
+
+SHOW GRANTS FOR support_app:
+GRANT support_reader TO support_app
+
+Role assignment from system.role_grants:
+user_name: support_app
+role_name: NULL
+granted_role_name: support_reader
+granted_role_is_default: 1
+
+Grant inspection for support_reader:
+No matching table privilege was present in system.grants.
+
+Diagnosis:
+- support_app had the expected role assigned
+- support_reader was active as a default role
+- support_reader had no SELECT grant on access_control_lab.customer_events
+- the authorization chain therefore stopped at the role
+
+Root cause:
+The role existed and was correctly assigned, but the required table-level SELECT privilege had not been granted to that role.
+
+Required minimal repair:
+GRANT SELECT ON access_control_lab.customer_events TO support_reader;

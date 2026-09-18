@@ -1,0 +1,25 @@
+INC-007 - Initial SELECT Permission Failure
+
+User: support_app
+Role: support_reader
+Database: access_control_lab
+Table: customer_events
+
+Query:
+SELECT event_id, tenant_id, event_type
+FROM access_control_lab.customer_events
+ORDER BY event_id;
+
+Observed result:
+Code: 497
+ACCESS_DENIED
+
+ClickHouse reported:
+support_app: Not enough privileges.
+To execute this query, it is necessary to have the grant:
+SELECT ON access_control_lab.customer_events
+
+Incident state:
+- support_app had support_reader assigned
+- support_reader did not have SELECT on access_control_lab.customer_events
+- the customer query failed because the role lacked the required table privilege
