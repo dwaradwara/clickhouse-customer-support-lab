@@ -5,7 +5,7 @@ COMPOSE := docker compose --env-file versions.env
 CLICKHOUSE := $(COMPOSE) exec -T clickhouse1 clickhouse-client
 KAFKA_BOOTSTRAP := kafka:19092
 
-.PHONY: help up down restart ps logs pull wait bootstrap kafka-topic schema diagnostics support-bundle incident-syntax versions
+.PHONY: help up down restart ps logs pull wait bootstrap kafka-topic schema smoke diagnostics support-bundle incident-syntax versions
 
 help:
 	@echo "ClickHouse Customer Support Engineering Lab"
@@ -20,6 +20,7 @@ help:
 	@echo "  make wait            Wait for ClickHouse and Kafka readiness"
 	@echo "  make kafka-topic     Create/verify the saas-events Kafka topic"
 	@echo "  make schema          Apply all ClickHouse schema files"
+	@echo "  make smoke           Run end-to-end smoke tests"
 	@echo "  make bootstrap       Start, wait, create topic, and apply schema"
 	@echo "  make diagnostics     Run all support diagnostic checks"
 	@echo "  make support-bundle  Collect a support bundle"
@@ -77,6 +78,9 @@ schema:
 	    $(CLICKHOUSE) --multiquery < "$$file"; \
 	done
 	@echo "PASS: ClickHouse schema applied."
+
+smoke:
+	bash tests/smoke/run.sh
 
 bootstrap:
 	@$(MAKE) up
